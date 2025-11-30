@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriestForm } from './priest-form';
+import { PriestFormComponent } from './priest-form.component';
 
-describe('PriestForm', () => {
-  let component: PriestForm;
-  let fixture: ComponentFixture<PriestForm>;
+describe('PriestFormComponent', () => {
+  let component: PriestFormComponent;
+  let fixture: ComponentFixture<PriestFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PriestForm]
+      imports: [PriestFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PriestForm);
+    fixture = TestBed.createComponent(PriestFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
