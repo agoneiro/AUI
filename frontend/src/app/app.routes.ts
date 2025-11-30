@@ -4,5 +4,6 @@ import { ParishFormComponent } from './components/parish-form/parish-form.compon
 
 export const routes: Routes = [
     {path: 'parishes', component: ParishListComponent},
-    {path: 'parishes/new', component: ParishFormComponent}
+    {path: 'parishes/new', component: ParishFormComponent},
+    {path: 'parishes/:id/edit', component: ParishFormComponent}
 ];
