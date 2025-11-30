@@ -9,5 +9,6 @@ export const routes: Routes = [
     {path: 'parishes/new', component: ParishFormComponent},
     {path: 'parishes/:id/edit', component: ParishFormComponent},
     {path: 'parishes/:id', component: ParishDetailsComponent},
-    {path: 'parishes/:parishId/priests/new', component: PriestFormComponent}
+    {path: 'parishes/:parishId/priests/new', component: PriestFormComponent},
+    {path: 'priests/:id/edit', component: PriestFormComponent}
 ];
