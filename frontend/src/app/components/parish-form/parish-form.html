@@ -1,0 +1,41 @@
+<div class="container" style="max-width: 500px; margin: 0 auto;">
+  
+  <h2 *ngIf="isEditMode; else addHeader">Edytuj parafię</h2>
+  <ng-template #addHeader><h2>Dodaj nową parafię</h2></ng-template>
+
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label for="name">Nazwa Parafii:</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        class="form-control" 
+        required 
+        [(ngModel)]="parish.name">
+    </div>
+
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label for="city">Miasto:</label>
+      <input 
+        type="text" 
+        id="city" 
+        name="city" 
+        class="form-control" 
+        required 
+        [(ngModel)]="parish.city">
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button type="submit" [disabled]="!form.valid" style="margin-right: 10px; padding: 8px 16px;">
+        {{ isEditMode ? 'Zaktualizuj' : 'Zapisz' }}
+      </button>
+
+      <button type="button" routerLink="/parishes" style="padding: 8px 16px;">
+        Anuluj
+      </button>
+    </div>
+
+  </form>
+</div>

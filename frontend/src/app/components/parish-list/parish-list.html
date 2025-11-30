@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Lista Parafii</h2>
+
+  <button routerLink="/parishes/new" class="btn-add">
+    + Dodaj nową parafię
+  </button>
+
+  <hr>
+
+  <div *ngIf="parishes.length === 0">
+    <p>Brak parafii do wyświetlenia. Dodaj jakąś!</p>
+  </div>
+
+  <ul class="parish-list">
+    <li *ngFor="let parish of parishes" class="parish-item">
+      
+      <span class="parish-name">
+        <a [routerLink]="['/parishes', parish.id]">
+          {{ parish.name }} ({{ parish.city }})
+        </a>
+      </span>
+
+      <div class="actions">
+        <button [routerLink]="['/parishes', parish.id, 'edit']">
+          Edytuj
+        </button>
+
+        <button (click)="deleteParish(parish.id)" class="btn-delete">
+          Usuń
+        </button>
+      </div>
+
+    </li>
+  </ul>
+</div>

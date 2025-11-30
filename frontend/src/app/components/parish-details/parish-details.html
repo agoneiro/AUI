@@ -1,0 +1,47 @@
+<div class="container" *ngIf="parish; else loading">
+  
+  <div class="card" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ddd;">
+    <h2>{{ parish.name }}</h2>
+    <p><strong>Miasto:</strong> {{ parish.city }}</p>
+    <p><strong>ID:</strong> <small>{{ parish.id }}</small></p>
+    
+    <div style="margin-top: 10px;">
+      <button routerLink="/parishes">← Powrót do listy</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Księża w tej parafii</h3>
+
+  <button [routerLink]="['/parishes', parish.id, 'priests', 'new']" style="margin-bottom: 15px;">
+    + Dodaj księdza
+  </button>
+
+  <div *ngIf="priests.length === 0">
+    <p>Brak księży w tej parafii.</p>
+  </div>
+
+  <ul>
+    <li *ngFor="let priest of priests" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 5px;">
+      
+      <span>
+        <strong>{{ priest.name }}</strong> (Wiek: {{ priest.age }})
+      </span>
+
+      <div class="actions">
+        <button [routerLink]="['/priests', priest.id]" style="margin-right: 5px;">Szczegóły</button>
+        
+        <button [routerLink]="['/priests', priest.id, 'edit']" style="margin-right: 5px;">Edytuj</button>
+        
+        <button (click)="deletePriest(priest.id)" style="background-color: #ffcccc;">Usuń</button>
+      </div>
+
+    </li>
+  </ul>
+
+</div>
+
+<ng-template #loading>
+  <p>Ładowanie danych...</p>
+</ng-template>

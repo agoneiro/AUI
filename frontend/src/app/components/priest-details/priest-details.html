@@ -1,0 +1,48 @@
+<div class="container" *ngIf="priest; else loading" style="max-width: 600px; margin: 0 auto;">
+  
+  <div class="card" style="padding: 20px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    
+    <h2 style="margin-top: 0;">{{ priest.name }}</h2>
+    
+    <div style="margin: 15px 0; line-height: 1.6;">
+      <p><strong>Wiek:</strong> {{ priest.age }} lat</p>
+      <p><strong>ID Księdza:</strong> <small>{{ priest.id }}</small></p>
+      
+      <hr>
+      
+      <div *ngIf="priest.parish">
+        <h3>Przypisana Parafia</h3>
+        <p><strong>Nazwa:</strong> {{ priest.parish.name }}</p>
+        <p><strong>ID Parafii:</strong> <small>{{ priest.parish.id }}</small></p>
+        
+        <div style="margin-top: 10px;">
+          <a [routerLink]="['/parishes', priest.parish.id]" style="color: blue; text-decoration: underline;">
+            Przejdź do tej parafii
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="!priest.parish" style="color: gray; font-style: italic;">
+        Ten ksiądz nie jest przypisany do żadnej parafii.
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="actions" style="margin-top: 20px;">
+      <button [routerLink]="['/priests', priest.id, 'edit']" style="margin-right: 10px; padding: 8px 16px;">
+        Edytuj dane
+      </button>
+
+      <button (click)="goBack()" style="padding: 8px 16px; background-color: #f0f0f0;">
+        Wróć
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #loading>
+  <p style="text-align: center; margin-top: 20px;">Ładowanie danych księdza...</p>
+</ng-template>
