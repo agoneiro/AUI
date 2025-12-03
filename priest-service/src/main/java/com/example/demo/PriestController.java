@@ -13,9 +13,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 public class PriestController {
-
+    private static final Logger log = LoggerFactory.getLogger(PriestController.class);
     private final PriestService priestService;
     private final PriestMapper priestMapper;
 
@@ -26,6 +29,7 @@ public class PriestController {
 
     @GetMapping("/priests")
     public List<PriestReadListDto> getAllPriests() {
+        log.info("--- Zapytanie obsłużone przez instancję PRIEST-SERVICE ---");
         return priestService.findAll().stream()
                 .map(priestMapper::toReadListDto)
                 .collect(Collectors.toList());
