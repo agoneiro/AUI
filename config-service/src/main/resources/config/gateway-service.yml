@@ -2,16 +2,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery-service:8761/eureka
-
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: parish-service
-          uri: lb://PARISH-SERVICE
-          predicates:
-            - Path=/parishes/**
-        - id: priest-service
-          uri: lb://PRIEST-SERVICE
-          predicates:
-            - Path=/priests/**
