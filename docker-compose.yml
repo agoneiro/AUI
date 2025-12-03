@@ -16,11 +16,6 @@ services:
       - "8761:8761"
     networks:
       - aui-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   parish-db:
     image: postgres:15-alpine
@@ -55,6 +50,7 @@ services:
       - "8081:8081"
     environment:
       - CONFIG_URI=http://config-service:8888
+      - EUREKA_URI=http://discovery-service:8761/eureka
       - EUREKA_INSTANCE_ID=parish-1
     depends_on:
       - parish-db
@@ -71,7 +67,8 @@ services:
       replicas: 2
     environment:
       - CONFIG_URI=http://config-service:8888
-      - EUREKA_INSTANCE_ID=priest-1
+      - EUREKA_URI=http://discovery-service:8761/eureka
+      - EUREKA_INSTANCE_INSTANCE_ID=$${spring.application.name}:$${random.uuid}
     depends_on:
       - priest-db
       - discovery-service
@@ -87,6 +84,7 @@ services:
       - "8080:8080"
     environment:
       - CONFIG_URI=http://config-service:8888 
+      - EUREKA_URI=http://discovery-service:8761/eureka
       - EUREKA_INSTANCE_ID=gateway-1
     depends_on:
       - parish-service
