@@ -13,7 +13,7 @@ public class ParishService {
     private final ParishRepository parishRepository;
     private final RestTemplate restTemplate;
 
-    private final String PRIEST_SERVICE_URL = "http://localhost:8082/api/events/parishes";
+    private final String PRIEST_SERVICE_URL = "http://PRIEST-SERVICE/api/events/parishes";
     public ParishService(ParishRepository parishRepository, RestTemplate restTemplate) {
         this.parishRepository = parishRepository;
         this.restTemplate = restTemplate;

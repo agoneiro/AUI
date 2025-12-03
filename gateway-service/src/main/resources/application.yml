@@ -10,27 +10,20 @@ spring:
         locator:
           enabled: true
       routes:
-        # 1. Reguła dla księży w parafiach (Hierarchiczna)
-        - id: priests-in-parish-route
-          uri: http://priest-service:8082
-          predicates:
-            - Path=/parishes/*/priests/**
-
-        # 2. Reguła dla samych parafii
-        - id: parish-service-route
-          uri: http://parish-service:8081
+        - id: parish-service
+          uri: lb://PARISH-SERVICE
           predicates:
             - Path=/parishes/**
-
-        # 3. Reguła dla księży (bezpośrednia)
-        - id: priest-service-route
-          uri: http://priest-service:8082
+        - id: priest-service
+          uri: lb://PRIEST-SERVICE
           predicates:
             - Path=/priests/**
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URI:http://discovery-service:8761/eureka}
+    register-with-eureka: true
+    fetch-registry: true
   instance:
     prefer-ip-address: true

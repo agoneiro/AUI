@@ -24,6 +24,7 @@
     <modules>
         <module>parish-service</module>
 		<module>priest-service</module>
+		<module>gateway-service</module>
         <module>discovery-service</module>
 	</modules>
     <scm>
@@ -58,6 +59,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
