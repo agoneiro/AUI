@@ -6,21 +6,32 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        # 1. Reguła dla księży w parafiach (Hierarchiczna)
-        - id: priests-in-parish-route
-          uri: http://priest-service:8082
+        - id: priest-in-parish-route
+          uri: lb://PRIEST-SERVICE
           predicates:
             - Path=/parishes/*/priests/**
-
-        # 2. Reguła dla samych parafii
+          order: 1
         - id: parish-service-route
-          uri: http://parish-service:8081
+          uri: lb://PARISH-SERVICE
           predicates:
             - Path=/parishes/**
-
-        # 3. Reguła dla księży (bezpośrednia)
+          order: 2
         - id: priest-service-route
-          uri: http://priest-service:8082
+          uri: lb://PRIEST-SERVICE
           predicates:
             - Path=/priests/**
+          order: 3
+  
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://discovery-service:8761/eureka}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true

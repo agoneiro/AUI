@@ -1,0 +1,12 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka
+  instance:
+    prefer-ip-address: true
+    
+spring:
+  datasource:
+    url: jdbc:postgresql://priest-db:5432/priestdb
+    username: postgres
+    password: password
