@@ -9,18 +9,18 @@ spring:
       routes:
         # 1. Reguła dla księży w parafiach (Hierarchiczna)
         - id: priests-in-parish-route
-          uri: http://localhost:8082
+          uri: http://priest-service:8082
           predicates:
             - Path=/parishes/*/priests/**
 
         # 2. Reguła dla samych parafii
         - id: parish-service-route
-          uri: http://localhost:8081
+          uri: http://parish-service:8081
           predicates:
             - Path=/parishes/**
 
         # 3. Reguła dla księży (bezpośrednia)
         - id: priest-service-route
-          uri: http://localhost:8082
+          uri: http://priest-service:8082
           predicates:
             - Path=/priests/**
