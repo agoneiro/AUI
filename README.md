@@ -1,44 +1,56 @@
-# System zarządzania parafią
+# System Zarządzania Parafiami i Księżmi
 
-Projekt realizowany w ramach laboratoriów z przedmiotu **Architektury usług internetowych**. Aplikacja składa się z trzech mikroserwisów backendowych (**Spring Boot**) oraz warstwy frontendowej (**Angular**).
+Projekt realizowany w ramach laboratoriów z przedmiotu **Architektury usług internetowych**. Aplikacja demonstruje architekturę mikroserwisów opartą o **Spring Boot**, frontend w **Angularze** oraz pełną konteneryzację przy użyciu **Docker & Docker Compose**.
+
+---
 
 ## 📂 Struktura Projektu
 
+System składa się z trzech usług backendowych, aplikacji frontendowej oraz dedykowanych baz danych:
+
 ```text
 AUI/
-├── gateway-service  # Brama API (Spring Cloud Gateway) - Port 8080
-├── parish-service   # Mikroserwis Parafii (H2 DB)    - Port 8081
-├── priest-service   # Mikroserwis Księży (H2 DB)    - Port 8082
-└── frontend         # Aplikacja kliencka (Angular 17+) - Port 4200
+├── gateway-service  # Brama API (Spring Cloud Gateway)
+├── parish-service   # Mikroserwis Parafii
+├── priest-service   # Mikroserwis Księży
+├── frontend         # Aplikacja Angular serwowana przez NGINX
+└── docker-compose.yml
 ```
 
 ---
 
-## 🛠️ Wymagane Narzędzia
-- Java JDK 17+
-- Maven
-- Node.js (LTS v20+)
-- Angular CLI (npm install -g @angular/cli)
+## 🛠️ Wykorzystane Technologie
 
---- 
+### Backend
+* **Java 17** & **Spring Boot 3.x**
+* **Maven**
+* **PostgreSQL 15**
+* **Angular 17+**
+* **NGINX**
+* **Docker** & **Docker Compose**
 
-## 🚀 Jak uruchomić?
-### 1. Backend (Spring Boot)
-Należy uruchomić trzy aplikacje równolegle:
-- ParishServiceApplication (Port: 8081)
-- PriestServiceApplication (Port: 8082)
-- GatewayServiceApplication (Port: 8080)
+---
 
-Bazy danych H2 są w pamięci i inicjalizują się automatycznie przy starcie.
+## 🚀 Instrukcja uruchomienia
+### 1. Budowanie aplikacji
 
-### 2. Frontend (Angular)
-Otwórz terminal w folderze frontend i wykonaj:
+W głównym folderze wykonaj:
 
-```bash
-# Instalacja zależności (tylko pierwszy raz)
-npm install
-# Uruchomienie serwera
-ng serve
+```powershell
+.\mvnw clean package -DskipTests
 ```
 
-Aplikacja dostępna pod adresem: http://localhost:4200/
+### 2. Uruchomienie kontenerów
+```bash
+docker-compose up -d --build
+```
+
+### 3. Dostęp do aplikacji
+Poczekaj ok. minuty aż wszystko się odpali:
+* Aplikacja dostępna pod adresem: http://localhost:4200
+
+#### Aby wyłączyć:
+```bash
+docker-compose down
+```
+
