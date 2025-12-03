@@ -1,4 +1,14 @@
 services:
+  config-service:
+    build: ./config-service
+    image: config-service:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - aui-network
+    depends_on:
+      - discovery-service
+
   discovery-service:
     build: ./discovery-service
     image: discovery-service:latest
@@ -6,11 +16,6 @@ services:
       - "8761:8761"
     networks:
       - aui-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   parish-db:
     image: postgres:15-alpine
@@ -44,13 +49,14 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - DB_URL=jdbc:postgresql://parish-db:5432/parishdb
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=password
+      - CONFIG_URI=http://config-service:8888
       - EUREKA_URI=http://discovery-service:8761/eureka
+      - EUREKA_INSTANCE_ID=parish-1
     depends_on:
       - parish-db
       - discovery-service
+      - config-service
+    restart: on-failure
     networks:
       - aui-network
 
@@ -60,14 +66,14 @@ services:
     deploy:
       replicas: 2
     environment:
-      - DB_URL=jdbc:postgresql://priest-db:5432/priestdb
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=password
+      - CONFIG_URI=http://config-service:8888
       - EUREKA_URI=http://discovery-service:8761/eureka
       - EUREKA_INSTANCE_INSTANCE_ID=$${spring.application.name}:$${random.uuid}
     depends_on:
       - priest-db
       - discovery-service
+      - config-service
+    restart: on-failure
     networks:
       - aui-network
 
@@ -77,11 +83,14 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - CONFIG_URI=http://config-service:8888 
       - EUREKA_URI=http://discovery-service:8761/eureka
+      - EUREKA_INSTANCE_ID=gateway-1
     depends_on:
       - parish-service
       - priest-service
       - discovery-service
+      - config-service
     networks:
       - aui-network
 

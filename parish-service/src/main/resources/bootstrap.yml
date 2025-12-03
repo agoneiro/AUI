@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: parish-service
+  config:
+    import: "configserver:${spring.cloud.config.uri}"
+  cloud:
+    config:
+      uri: ${CONFIG_URI:http://localhost:8888}
+
+eureka:
+  instance:
+    instance-id: ${EUREKA_INSTANCE_INSTANCE_ID:${spring.application.name}:${random.value}}

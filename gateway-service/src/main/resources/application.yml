@@ -10,14 +10,22 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: parish-service
+        - id: priest-in-parish-route
+          uri: lb://PRIEST-SERVICE
+          predicates:
+            - Path=/parishes/*/priests/**
+          order: 1
+        - id: parish-service-route
           uri: lb://PARISH-SERVICE
           predicates:
             - Path=/parishes/**
-        - id: priest-service
+          order: 2
+        - id: priest-service-route
           uri: lb://PRIEST-SERVICE
           predicates:
             - Path=/priests/**
+          order: 3
+  
 
 eureka:
   client:
