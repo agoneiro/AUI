@@ -15,7 +15,7 @@ COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 # Kopiujemy szablon konfiguracji
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
-# Ustawiamy domyślną wartość zmiennej (można nadpisać w docker-compose)
+# Ustawiamy domyślną wartość zmiennej
 ENV API_URL=http://gateway-service:8080
 
 EXPOSE 80
